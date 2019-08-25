@@ -28,71 +28,116 @@ public class Simulation {
         return itemArrayList;
     }
 
-    public int loadU1(ArrayList itemArrayList1){
+
+    public int loadU1(ArrayList itemArrayList){
         U1 u1 = new U1();
 
-
-        int cargoLoaded = 0;
+        int u1RocketsCount = 1; // starting with first rocket to fill
         int singleItemWeight = 0;
-        int numberOfRocketsLoaded = 1;
+        double limit = u1.cargoLimit;
+        double initialCargoLimit = u1.cargoLimit;
+        ArrayList u1Rockets = new ArrayList();
+        int cargoCarried = 0;
 
-        String tempString = "";
+        System.out.println();
+        System.out.println("Starting loading U1 rockets.");
 
-        try {
-            for (int i = itemArrayList1.size()-1; i >= 0; i--){
-//                System.out.println(itemArrayList1.get(i));
-                tempString = itemArrayList1.get(i).toString();
-                singleItemWeight = Integer.parseInt(tempString.split("=")[1]);
-                cargoLoaded = cargoLoaded + singleItemWeight;
+        for (Object i: itemArrayList){
+
+//            System.out.println(i);
+            String line = String.valueOf(i.toString().split("=")[1]);
+            singleItemWeight = Integer.parseInt(line);
+
+//            System.out.println("Limit: "+limit);
+//            System.out.println("Item: "+ singleItemWeight);
+
+            if ((limit - singleItemWeight) >= 0) {
+                cargoCarried += singleItemWeight;
+                limit -= singleItemWeight;
             }
-//            System.out.println("U1 cargo loaded: "+cargoLoaded);
-//            System.out.println("U1 cargo limit: "+u1.getCargoLimit());
+            else {
+                u1Rockets.add(cargoCarried);
 
-            double lastRocketWeight = cargoLoaded % u1.getCargoLimit();
-            System.out.println("Modulo " + lastRocketWeight);
-            numberOfRocketsLoaded = (int) Math.ceil(cargoLoaded/u1.getCargoLimit());
-            System.out.println("U1 rockets loaded: "+numberOfRocketsLoaded);
+//                System.out.println();
+//                System.out.println("adding rocket: "+u1Rockets.size());
+//                System.out.println(u1Rockets);
+//                System.out.println();
 
-        } catch (Exception e){
-            System.out.println("Exception: "+e);
+                limit = initialCargoLimit;
+
+                cargoCarried = 0;
+
+                cargoCarried += singleItemWeight;
+
+                limit -= singleItemWeight;
+            }
+
+//            System.out.println("Cargo carried: "+cargoCarried);
+//            System.out.println();
         }
-        return numberOfRocketsLoaded;
+
+        if (cargoCarried > 0){
+            u1Rockets.add(cargoCarried);
+        }
+
+        System.out.println(u1Rockets);
+        return u1Rockets.size();
     }
 
-    public int loadU2(ArrayList itemArrayList2){
+
+    public int loadU2(ArrayList itemArrayList){
         U2 u2 = new U2();
-        ArrayList rocketLoaded = new ArrayList();
 
-        int cargoLoaded = 0; // total amount of cargo loaded to all rockets
+        int u1RocketsCount = 1; // starting with first rocket to fill
         int singleItemWeight = 0;
-        int numberOfRocketsLoaded = 0;
+        double limit = u2.cargoLimit;
+        double initialCargoLimit = u2.cargoLimit;
+        ArrayList u2Rockets = new ArrayList();
+        int cargoCarried = 0;
 
-        String tempString = "";
+        System.out.println();
+        System.out.println("Starting loading U2 rockets.");
 
-        try {
-            for (int i = itemArrayList2.size()-1; i >= 0; i--){
-//                System.out.println(itemArrayList2.get(i));
-                tempString = itemArrayList2.get(i).toString();
-                singleItemWeight = Integer.parseInt(tempString.split("=")[1]);
-                cargoLoaded = cargoLoaded + singleItemWeight;
+        for (Object i: itemArrayList){
 
+//            System.out.println(i);
+            String line = String.valueOf(i.toString().split("=")[1]);
+            singleItemWeight = Integer.parseInt(line);
 
+//            System.out.println("Limit: "+limit);
+//            System.out.println("Item: "+ singleItemWeight);
 
+            if ((limit - singleItemWeight) >= 0) {
+                cargoCarried += singleItemWeight;
+                limit -= singleItemWeight;
             }
-//            System.out.println("U2 cargo loaded: "+cargoLoaded);
-//            System.out.println("U2 cargo limit: "+u2.getCargoLimit());
-            double lastRocketWeight = cargoLoaded % u2.getCargoLimit();
-            System.out.println("Modulo " + lastRocketWeight);
-            numberOfRocketsLoaded = (int) Math.ceil(cargoLoaded/u2.getCargoLimit());
-            System.out.println("U2 rockets loaded: "+numberOfRocketsLoaded);
+            else {
+                u2Rockets.add(cargoCarried);
 
+//                System.out.println();
+//                System.out.println("adding rocket: "+u2Rockets.size());
+//                System.out.println(u2Rockets);
+//                System.out.println();
 
+                limit = initialCargoLimit;
 
-        } catch (Exception e){
-            System.out.println("Exception: "+e);
+                cargoCarried = 0;
+
+                cargoCarried += singleItemWeight;
+
+                limit -= singleItemWeight;
+            }
+
+//            System.out.println("Cargo carried: "+cargoCarried);
+//            System.out.println();
         }
-        return (int) numberOfRocketsLoaded; //TODO do arraylisty wpisać wagę poszczególnych rakiet, żeby móc je przetestować, czy mogą lądować i startować, każda musi mieć określoną wage
 
+        if (cargoCarried > 0){
+            u2Rockets.add(cargoCarried);
+        }
+
+        System.out.println(u2Rockets);
+        return u2Rockets.size();
     }
 
 
