@@ -1,13 +1,11 @@
-import javax.sound.midi.Soundbank;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Simulation {
+class Simulation {
 
-    public ArrayList itemArrayList = new ArrayList();
-
-    public ArrayList loadItems(String textFile){ //TODO wypełnić metodą wczytującą plik
+    ArrayList itemArrayList = new ArrayList();
+    void loadItems(String textFile){
 
         try {
             itemArrayList.clear();
@@ -25,11 +23,10 @@ public class Simulation {
         catch (Exception e){
             System.out.println("EXCEPTION: "+e);
         }
-        return itemArrayList;
     }
 
 
-    public ArrayList loadU1(ArrayList itemArrayList){
+    ArrayList loadU1(ArrayList itemArrayList){
         U1 u1 = new U1();
 
         int u1RocketsCount = 1; // starting with first rocket to fill
@@ -38,9 +35,6 @@ public class Simulation {
         double initialCargoLimit = u1.cargoLimit;
         ArrayList u1Rockets = new ArrayList();
         int cargoCarried = 0;
-
-//        System.out.println();
-//        System.out.println("Starting loading U1 rockets.");
 
         for (Object i: itemArrayList){
             String line = String.valueOf(i.toString().split("=")[1]);
@@ -58,11 +52,9 @@ public class Simulation {
                 limit -= singleItemWeight;
             }
         }
-
         if (cargoCarried > 0){
             u1Rockets.add(cargoCarried);
         }
-
         return u1Rockets;
     }
 
@@ -70,15 +62,11 @@ public class Simulation {
     public ArrayList loadU2(ArrayList itemArrayList){
         U2 u2 = new U2();
 
-        int u1RocketsCount = 1; // starting with first rocket to fill
         int singleItemWeight = 0;
         double limit = u2.cargoLimit;
         double initialCargoLimit = u2.cargoLimit;
         ArrayList u2Rockets = new ArrayList();
         int cargoCarried = 0;
-//
-//        System.out.println();
-//        System.out.println("Starting loading U2 rockets.");
 
         for (Object i: itemArrayList){
 
@@ -97,12 +85,9 @@ public class Simulation {
                 limit -= singleItemWeight;
             }
         }
-
         if (cargoCarried > 0){
             u2Rockets.add(cargoCarried);
         }
-
-        //System.out.println(u2Rockets);
         return u2Rockets;
     }
 
@@ -143,7 +128,6 @@ public class Simulation {
             }
             goodCount++;
         }
-
             System.out.println();
             System.out.println("Total project cost of launching U2 rockets for this phase is:");
             System.out.println();
